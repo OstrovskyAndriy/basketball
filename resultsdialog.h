@@ -2,7 +2,7 @@
 #define RESULTSDIALOG_H
 
 #include <QDialog>
-//#include <addgamedialog.h>
+#include "addgamedialog.h"
 
 namespace Ui {
 class ResultsDialog;
@@ -21,8 +21,8 @@ private slots:
 
 private:
     Ui::ResultsDialog *ui;
+    AddGameDialog *addGameDialog;
 
-//    AddGameDialog *addGameDialog;
 };
 
 #endif // RESULTSDIALOG_H

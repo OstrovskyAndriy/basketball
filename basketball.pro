@@ -24,17 +24,25 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    addgamedialog.cpp \
+    addteamdialog.cpp \
     dbmanager.cpp \
     main.cpp \
     mainwindow.cpp \
+    player.cpp \
     resultsdialog.cpp
 
 HEADERS += \
+    addgamedialog.h \
+    addteamdialog.h \
     dbmanager.h \
     mainwindow.h \
+    player.h \
     resultsdialog.h
 
 FORMS += \
+    addgamedialog.ui \
+    addteamdialog.ui \
     mainwindow.ui \
     resultsdialog.ui
 

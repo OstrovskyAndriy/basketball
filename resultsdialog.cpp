@@ -20,8 +20,8 @@ ResultsDialog::~ResultsDialog()
 
 void ResultsDialog::on_addgame_clicked()
 {
-//    this->addGameDialog=new AddGameDialog;
-//    addGameDialog->show();
-//    this->hide();
+    this->addGameDialog=new AddGameDialog;
+    addGameDialog->show();
+    this->hide();
 }
 

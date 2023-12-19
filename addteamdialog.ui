@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AddTeamDialog</class>
+ <widget class="QDialog" name="AddTeamDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>431</width>
+    <height>359</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QPushButton" name="saveButton">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>290</y>
+     <width>135</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Зберегти команду</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="teamName">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>30</y>
+     <width>241</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>Ведіть назву команди</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>80</y>
+     <width>371</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Додавання гравців (5-мін 10-макс)</string>
+   </property>
+   <widget class="QPushButton" name="addPlayer">
+    <property name="geometry">
+     <rect>
+      <x>200</x>
+      <y>130</y>
+      <width>141</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Додати гравця</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="playerName">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>113</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Ім'я</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="playerSurname">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>80</y>
+      <width>113</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Прізвище</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="playerWins">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>30</y>
+      <width>113</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>к-сть виграшів</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="playerLoses">
+    <property name="geometry">
+     <rect>
+      <x>190</x>
+      <y>80</y>
+      <width>131</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>к-сть програшів</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
