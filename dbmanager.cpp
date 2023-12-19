@@ -64,6 +64,69 @@ bool DBManager::getUser(const QString &name, const QString &password)
     return false;
 }
 
+bool DBManager::addTeam(const QString teamName, const std::vector<Player> &players)
+{
+    QSqlQuery query;
+
+    // Вставка команди в таблицю Teams
+    query.prepare("INSERT INTO Teams (team_name) VALUES (:teamName)");
+    query.bindValue(":teamName", teamName);
+
+    if (!query.exec()) {
+        qDebug() << "Error inserting team into Teams table:" << query.lastError().text();
+        return false;
+    }
+
+    // Отримання ідентифікатора вставленої команди
+    query.prepare("SELECT team_id FROM Teams WHERE team_name = :teamName");
+    query.bindValue(":teamName", teamName);
+
+    int teamId = 0;
+    if (query.exec() && query.next()) {
+        teamId = query.value("team_id").toInt();
+    } else {
+        qDebug() << "Error retrieving team_id for the inserted team:" << query.lastError().text();
+        return false;
+    }
+
+    // Вставка гравців в таблицю Players
+    query.prepare("INSERT INTO Players (last_name, first_name, team_id, victories, defeats) "
+                  "VALUES (:lastName, :firstName, :teamId, :victories, :defeats)");
+
+    for (const Player &player : players) {
+        query.bindValue(":lastName", player.getLastName());
+        query.bindValue(":firstName", player.getFirstName());
+        query.bindValue(":teamId", teamId);
+        query.bindValue(":victories", player.getWins());
+        query.bindValue(":defeats", player.getLosses());
+
+        if (!query.exec()) {
+            qDebug() << "Error inserting player into Players table:" << query.lastError().text();
+            return false;
+        }
+    }
+
+    return true;
+}
+
+QStringList DBManager::getAllTeams()
+{
+    QStringList teams;
+    QSqlQuery query("SELECT team_name FROM teams");
+
+    if (query.exec()) {
+        while (query.next()) {
+            QString teamName = query.value("team_name").toString();
+            teams << teamName;
+        }
+    } else {
+        qDebug() << "Error retrieving teams from the database:" << query.lastError().text();
+    }
+
+    return teams;
+}
+
+
 
 
 
@@ -102,12 +165,11 @@ bool DBManager::createTables()
 {
     QSqlQuery query;
 
-    if(!query.exec("CREATE TABLE Teams ("
+    if(!query.exec("CREATE TABLE teams ("
                    "team_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                   "team_name VARCHAR(255),"
-                   "team_location VARCHAR(255));")
+                   "team_name VARCHAR(255));")
             ||
-            !query.exec("CREATE TABLE Games ("
+            !query.exec("CREATE TABLE games ("
                         "game_id INTEGER PRIMARY KEY AUTOINCREMENT,"
                         "date_played DATE,"
                         "team1_id INTEGER,"
@@ -117,7 +179,7 @@ bool DBManager::createTables()
                         "FOREIGN KEY (team1_id) REFERENCES Teams(team_id),"
                         "FOREIGN KEY (team2_id) REFERENCES Teams(team_id));")
             ||
-            !query.exec("CREATE TABLE Players ("
+            !query.exec("CREATE TABLE players ("
                         "player_id INTEGER PRIMARY KEY AUTOINCREMENT,"
                         "last_name VARCHAR(255),"
                         "first_name VARCHAR(255),"
@@ -126,7 +188,7 @@ bool DBManager::createTables()
                         "defeats INTEGER,"
                         "FOREIGN KEY (team_id) REFERENCES Teams(team_id));")
             ||
-            !query.exec("CREATE TABLE Users ("
+            !query.exec("CREATE TABLE users ("
                         "user_id INTEGER PRIMARY KEY AUTOINCREMENT,"
                         "username VARCHAR(255) UNIQUE,"
                         "password VARCHAR(255),"

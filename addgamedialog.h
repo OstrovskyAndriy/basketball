@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <addteamdialog.h>
+#include <dbmanager.h>
 
 
 namespace Ui {
@@ -19,11 +20,13 @@ public:
 
 private slots:
     void on_addTeamButton_clicked();
+    void fillComboBoxes();
 
 private:
     Ui::AddGameDialog *ui;
 
     AddTeamDialog*addTeamDialog;
+    DBManager *db;
 
 
 };

@@ -6,6 +6,7 @@ AddTeamDialog::AddTeamDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AddTeamDialog)
 {
+    db=DBManager::getInstance();
     ui->setupUi(this);
 }
 
@@ -16,6 +17,7 @@ AddTeamDialog::~AddTeamDialog()
 
 void AddTeamDialog::on_addPlayer_clicked()
 {
+
     QString name = ui->playerName->text();
     QString surname = ui->playerSurname->text();
     QString winsStr = ui->playerWins->text();
@@ -46,12 +48,21 @@ void AddTeamDialog::on_addPlayer_clicked()
     ui->playerSurname->clear();
     ui->playerWins->clear();
     ui->playerLoses->clear();
+    playersCount++;
+
 }
 
 
 
 void AddTeamDialog::on_saveButton_clicked()
 {
+    if(playersCount>=5&&playersCount<=10){
+        db->addTeam(ui->teamName->text(),players);
+        this->hide();
+    }
+    else{
+        QMessageBox::warning(this, "Error", "Гравців повинно бути мінімум 5 і максимум 10.");
 
+    }
 }
 

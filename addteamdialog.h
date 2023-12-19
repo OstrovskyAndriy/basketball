@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <player.h>
 #include <vector>
+#include <dbmanager.h>
 
 namespace Ui {
 class AddTeamDialog;
@@ -25,6 +26,10 @@ private slots:
 private:
     Ui::AddTeamDialog *ui;
     std::vector<Player> players;
+
+    DBManager *db;
+
+    int playersCount=0;
 
 };
 

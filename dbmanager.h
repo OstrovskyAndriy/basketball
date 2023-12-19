@@ -6,6 +6,8 @@
 #include <QDebug> //бібліотека для відладки програми
 #include <QSqlQuery> // бібліотека для запиту до баз даних
 #include <QtSql>
+#include <player.h>
+#include <vector>
 
 
 class DBManager
@@ -28,6 +30,10 @@ public:
     QSqlDatabase getDB();
 
     bool getUser(const QString &name, const QString &password);
+
+    bool addTeam(const QString teamName, const std::vector<Player> &players);
+    QStringList getAllTeams();
+
 };
 
 #endif // DBMANAGER_H
