@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete resultsDialog;
+    delete registrationDialog;
 }
 
 
@@ -52,5 +54,12 @@ void MainWindow::on_password_returnPressed()
 {
     this->on_loginButton_clicked();
 
+}
+
+
+void MainWindow::on_regiterButton_clicked()
+{
+    this->registrationDialog=new RegistrationDialog;
+    registrationDialog->show();
 }
 

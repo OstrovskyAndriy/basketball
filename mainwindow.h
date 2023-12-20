@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <dbmanager.h>
 #include <resultsdialog.h>
+#include <registrationdialog.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,10 +23,13 @@ private slots:
 
     void on_password_returnPressed();
 
+    void on_regiterButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
     DBManager *db;
     ResultsDialog* resultsDialog;
+    RegistrationDialog *registrationDialog;
 };
 #endif // MAINWINDOW_H

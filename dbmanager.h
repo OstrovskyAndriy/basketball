@@ -30,6 +30,7 @@ public:
     QSqlDatabase getDB();
 
     bool getUser(const QString &name, const QString &password);
+    bool registerUser(const QString &username, const QString &password, bool isAdmin, const QString &email, const QString &phoneNumber);
 
     bool addTeam(const QString teamName, const std::vector<Player> &players);
     QStringList getAllTeams();

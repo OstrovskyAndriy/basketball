@@ -4,7 +4,7 @@
 #include <QDialog>
 #include <addteamdialog.h>
 #include <dbmanager.h>
-
+#include <QComboBox>
 
 namespace Ui {
 class AddGameDialog;

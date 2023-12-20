@@ -14,6 +14,7 @@ AddGameDialog::AddGameDialog(QWidget *parent) :
 AddGameDialog::~AddGameDialog()
 {
     delete ui;
+    delete addTeamDialog;
 }
 
 void AddGameDialog::on_addTeamButton_clicked()
@@ -30,13 +31,10 @@ void AddGameDialog::fillComboBoxes()
         qDebug() << "Team:" << team;
     }
     // Очищення вмісту ComboBox перед заповненням
-        ui->team1ComboBox->clear();
-        ui->team2ComboBox->clear();
+//        ui->teams1ComboBox->clear();
+//        ui->teams2ComboBox->clear();
 
         // Вставлення команд у ComboBox
-        ui->team1ComboBox->addItems(teams);
-        ui->team2ComboBox->addItems(teams);
+        ui->teams1ComboBox->addItems(teams);
+        ui->teams2ComboBox->addItems(teams);
 }
-
-
-

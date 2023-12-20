@@ -18,7 +18,7 @@
     <widget class="QTableView" name="resultsTable"/>
    </item>
    <item>
-    <widget class="QPushButton" name="addgame">
+    <widget class="QPushButton" name="addGameButton">
      <property name="text">
       <string>Додати гру</string>
      </property>

@@ -6,7 +6,7 @@ ResultsDialog::ResultsDialog(bool isAdmin, QWidget *parent) :
     ui(new Ui::ResultsDialog)
 {
     if(!isAdmin){
-        ui->addgame->hide();
+        this->ui->addGameButton->hide();
     }
 
 

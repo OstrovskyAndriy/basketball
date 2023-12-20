@@ -32,6 +32,25 @@ QSqlDatabase DBManager::getDB()
     return db;
 }
 
+bool DBManager::registerUser(const QString &username, const QString &password, bool isAdmin, const QString &email, const QString &phoneNumber) {
+    QSqlQuery query;
+    query.prepare("INSERT INTO users (username, password, isAdmin, email, phone_number) "
+                  "VALUES (:username, :password, :isAdmin, :email, :phone_number)");
+    query.bindValue(":username", username);
+    query.bindValue(":password", password);
+    query.bindValue(":isAdmin", isAdmin);
+    query.bindValue(":email", email);
+    query.bindValue(":phone_number", phoneNumber);
+
+    if (query.exec()) {
+        return true;  // Успішна реєстрація
+    } else {
+        qDebug() << "User registration failed:" << query.lastError().text();
+        return false; // Невдача реєстрації
+    }
+}
+
+
 
 bool DBManager::getUser(const QString &name, const QString &password)
 {
@@ -52,10 +71,12 @@ bool DBManager::getUser(const QString &name, const QString &password)
         if (isAdmin) {
             qDebug() << "User is an admin.";
             return true;
-        } else {
+        }
+        else {
             qDebug() << "User is not an admin.";
         }
-    } else {
+    }
+    else {
         // Користувача із вказаним логіном і паролем не знайдено
         qDebug() << "User not found or invalid credentials.";
         throw std::runtime_error("User not found or invalid credentials.");  // Виняток

@@ -30,6 +30,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     player.cpp \
+    registrationdialog.cpp \
     resultsdialog.cpp
 
 HEADERS += \
@@ -38,12 +39,14 @@ HEADERS += \
     dbmanager.h \
     mainwindow.h \
     player.h \
+    registrationdialog.h \
     resultsdialog.h
 
 FORMS += \
     addgamedialog.ui \
     addteamdialog.ui \
     mainwindow.ui \
+    registrationdialog.ui \
     resultsdialog.ui
 
 # Default rules for deployment.
