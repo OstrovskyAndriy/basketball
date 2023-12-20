@@ -15,8 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete resultsDialog;
-    delete registrationDialog;
 }
 
 
@@ -44,6 +42,7 @@ void MainWindow::on_loginButton_clicked()
     this->resultsDialog = new ResultsDialog(isAdmin);
     resultsDialog->show();
     this->hide();
+
 
 }
 

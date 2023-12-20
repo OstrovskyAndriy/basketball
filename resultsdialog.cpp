@@ -5,6 +5,7 @@ ResultsDialog::ResultsDialog(bool isAdmin, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ResultsDialog)
 {
+
     if(!isAdmin){
         this->ui->addGameButton->hide();
     }
@@ -18,7 +19,8 @@ ResultsDialog::~ResultsDialog()
     delete ui;
 }
 
-void ResultsDialog::on_addgame_clicked()
+
+void ResultsDialog::on_addGameButton_clicked()
 {
     this->addGameDialog=new AddGameDialog;
     addGameDialog->show();

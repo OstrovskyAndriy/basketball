@@ -14,7 +14,6 @@ AddGameDialog::AddGameDialog(QWidget *parent) :
 AddGameDialog::~AddGameDialog()
 {
     delete ui;
-    delete addTeamDialog;
 }
 
 void AddGameDialog::on_addTeamButton_clicked()

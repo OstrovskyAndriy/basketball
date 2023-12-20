@@ -17,7 +17,8 @@ public:
     ~ResultsDialog();
 
 private slots:
-    void on_addgame_clicked();
+
+    void on_addGameButton_clicked();
 
 private:
     Ui::ResultsDialog *ui;

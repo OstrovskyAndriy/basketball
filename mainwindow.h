@@ -29,7 +29,7 @@ private:
     Ui::MainWindow *ui;
 
     DBManager *db;
-    ResultsDialog* resultsDialog;
+    ResultsDialog *resultsDialog;
     RegistrationDialog *registrationDialog;
 };
 #endif // MAINWINDOW_H
