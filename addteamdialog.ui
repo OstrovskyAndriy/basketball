@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>431</width>
-    <height>359</height>
+    <width>366</width>
+    <height>324</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>220</x>
-     <y>290</y>
+     <y>280</y>
      <width>135</width>
      <height>29</height>
     </rect>
@@ -42,10 +42,10 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>80</y>
-     <width>371</width>
-     <height>181</height>
+     <x>30</x>
+     <y>130</y>
+     <width>323</width>
+     <height>139</height>
     </rect>
    </property>
    <property name="title">
@@ -54,9 +54,9 @@
    <widget class="QPushButton" name="addPlayer">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>130</y>
-      <width>141</width>
+      <x>170</x>
+      <y>80</y>
+      <width>111</width>
       <height>29</height>
      </rect>
     </property>
@@ -90,7 +90,7 @@
      <string>Прізвище</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="playerWins">
+   <widget class="QLineEdit" name="playerHeight">
     <property name="geometry">
      <rect>
       <x>190</x>
@@ -100,22 +100,35 @@
      </rect>
     </property>
     <property name="placeholderText">
-     <string>к-сть виграшів</string>
+     <string>Ріст</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="playerLoses">
-    <property name="geometry">
-     <rect>
-      <x>190</x>
-      <y>80</y>
-      <width>131</width>
-      <height>28</height>
-     </rect>
-    </property>
-    <property name="placeholderText">
-     <string>к-сть програшів</string>
-    </property>
-   </widget>
+  </widget>
+  <widget class="QLineEdit" name="teamWins">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>80</y>
+     <width>113</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>К-сть виграшів</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="teamLoses">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>80</y>
+     <width>113</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="placeholderText">
+    <string>К-сть програшів</string>
+   </property>
   </widget>
  </widget>
  <resources/>

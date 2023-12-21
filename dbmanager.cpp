@@ -85,49 +85,48 @@ bool DBManager::getUser(const QString &name, const QString &password)
     return false;
 }
 
-bool DBManager::addTeam(const QString teamName, const std::vector<Player> &players)
+bool DBManager::addTeam(const QString teamName, const std::vector<Player> &players, int wins, int loses)
 {
     QSqlQuery query;
 
-    // Вставка команди в таблицю Teams
-    query.prepare("INSERT INTO Teams (team_name) VALUES (:teamName)");
+    // Вставка команди в таблицю teams
+    query.prepare("INSERT INTO teams (team_name, victories, defeats) VALUES (:teamName, :wins, :loses);");
     query.bindValue(":teamName", teamName);
+    query.bindValue(":wins", wins);
+    query.bindValue(":loses", loses);
 
     if (!query.exec()) {
-        qDebug() << "Error inserting team into Teams table:" << query.lastError().text();
+        qDebug() << "Error adding team to the database:" << query.lastError().text();
         return false;
     }
 
     // Отримання ідентифікатора вставленої команди
-    query.prepare("SELECT team_id FROM Teams WHERE team_name = :teamName");
-    query.bindValue(":teamName", teamName);
+    int teamId = query.lastInsertId().toInt();
 
-    int teamId = 0;
-    if (query.exec() && query.next()) {
-        teamId = query.value("team_id").toInt();
-    } else {
-        qDebug() << "Error retrieving team_id for the inserted team:" << query.lastError().text();
-        return false;
-    }
-
-    // Вставка гравців в таблицю Players
-    query.prepare("INSERT INTO Players (last_name, first_name, team_id, victories, defeats) "
-                  "VALUES (:lastName, :firstName, :teamId, :victories, :defeats)");
-
+    // Вставка гравців в таблицю players
     for (const Player &player : players) {
-        query.bindValue(":lastName", player.getLastName());
-        query.bindValue(":firstName", player.getFirstName());
-        query.bindValue(":teamId", teamId);
-        query.bindValue(":victories", player.getWins());
-        query.bindValue(":defeats", player.getLosses());
-
-        if (!query.exec()) {
-            qDebug() << "Error inserting player into Players table:" << query.lastError().text();
-            return false;
-        }
+        addPlayer(player, teamId);
     }
 
     return true;
+}
+
+void DBManager::addPlayer(const Player &player, int teamId)
+{
+    QSqlQuery query;
+
+    // Вставка гравця в таблицю players
+    query.prepare("INSERT INTO players (first_name, last_name, height, team_id) "
+                  "VALUES (:firstName, :lastName, :height, :teamId);");
+    query.bindValue(":firstName", player.getFirstName());
+    query.bindValue(":lastName", player.getLastName());
+    query.bindValue(":height", player.getHeight());
+    query.bindValue(":teamId", teamId);
+
+    if (!query.exec()) {
+        qDebug() << "Error adding player to the database:" << query.lastError().text();
+        qDebug()<<query.lastQuery();
+    }
 }
 
 QMap<int, QString> DBManager::getAllTeams()
@@ -159,11 +158,41 @@ bool DBManager::addGame(int team1Id, int team2Id, const QString &result, const Q
     query.bindValue(":score", result);
     query.bindValue(":location", location);
 
-    if (query.exec()) {
-        return true;
-    } else {
+    if (!query.exec()) {
         qDebug() << "Error adding game:" << query.lastError().text();
         return false;
+    }
+
+    // Отримання інформації про результат гри
+    QStringList scoreParts = result.split(":");
+    int team1Score = scoreParts[0].toInt();
+    int team2Score = scoreParts[1].toInt();
+
+    // Оновлення статистики команд
+    updateTeamStats(team1Id, team1Score > team2Score, team1Score < team2Score);
+    updateTeamStats(team2Id, team2Score > team1Score, team2Score < team1Score);
+
+
+    return true;
+}
+
+//функція для оновлення статистики виграшів/програшів для команди
+void DBManager::updateTeamStats(int teamId, bool isVictorious, bool isDefeated) const
+{
+    QSqlQuery query;
+
+    if (isVictorious) {
+        query.prepare("UPDATE teams SET victories = victories + 1 WHERE team_id = :teamId");
+    } else if (isDefeated) {
+        query.prepare("UPDATE teams SET defeats = defeats + 1 WHERE team_id = :teamId");
+    } else {
+        return;  // Невідомий стан гри
+    }
+
+    query.bindValue(":teamId", teamId);
+
+    if (!query.exec()) {
+        qDebug() << "Error updating team stats:" << query.lastError().text();
     }
 }
 
@@ -208,7 +237,9 @@ bool DBManager::createTables()
 
     if(!query.exec("CREATE TABLE teams ("
                    "team_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                   "team_name VARCHAR(255));")
+                   "team_name VARCHAR(255),"
+                   "victories INTEGER,"
+                   "defeats INTEGER);")
             ||
             !query.exec("CREATE TABLE games ("
                         "game_id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -224,9 +255,8 @@ bool DBManager::createTables()
                         "player_id INTEGER PRIMARY KEY AUTOINCREMENT,"
                         "last_name VARCHAR(255),"
                         "first_name VARCHAR(255),"
+                        "height INEGER,"
                         "team_id INTEGER,"
-                        "victories INTEGER,"
-                        "defeats INTEGER,"
                         "FOREIGN KEY (team_id) REFERENCES Teams(team_id));")
             ||
             !query.exec("CREATE TABLE users ("

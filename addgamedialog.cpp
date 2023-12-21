@@ -54,6 +54,12 @@ void AddGameDialog::on_saveButton_clicked()
     // Отримання даних з комбобоксів та інших полів
     int team1Id = ui->teams1ComboBox->currentData().toInt();
     int team2Id = ui->teams2ComboBox->currentData().toInt();
+
+    if(team1Id==team2Id){
+        QMessageBox::warning(this, "Error", "Оберіть команди коректно");
+        return;
+    }
+
     QString result = ui->result->text();
     QDate gameDate = ui->dateEdit->date();
     QString location = ui->locationLineEdit->text();

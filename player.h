@@ -5,18 +5,17 @@
 
 class Player {
 public:
-    Player(const QString &firstName, const QString &lastName, int wins, int losses);
+    Player(const QString &firstName, const QString &lastName,int height);
 
     QString getFirstName() const;
     QString getLastName() const;
-    int getWins() const;
-    int getLosses() const;
+    int getHeight() const;
 
 private:
     QString firstName;
     QString lastName;
-    int wins;
-    int losses;
+
+    int heigth;
 };
 
 #endif // PLAYER_H

@@ -20,34 +20,31 @@ void AddTeamDialog::on_addPlayer_clicked()
 
     QString name = ui->playerName->text();
     QString surname = ui->playerSurname->text();
-    QString winsStr = ui->playerWins->text();
-    QString lossesStr = ui->playerLoses->text();
+    QString heightS = ui->playerHeight->text();
 
     // Перевірка на пусті поля
-    if (name.isEmpty() || surname.isEmpty() || winsStr.isEmpty() || lossesStr.isEmpty()) {
+    if (name.isEmpty() || surname.isEmpty() || heightS.isEmpty() ) {
         QMessageBox::warning(this, "Error", "Заповніть всі поля.");
         return;
     }
 
     // Перевірка на int для перемог і програшів
-    bool winsOk, lossesOk;
-    int wins = winsStr.toInt(&winsOk);
-    int losses = lossesStr.toInt(&lossesOk);
+    bool winsOk;
+    int height = heightS.toInt(&winsOk);
 
-    if (!winsOk || !lossesOk) {
-        QMessageBox::warning(this, "Error", "Перемоги та програші повинні бути int.");
+    if (!winsOk) {
+        QMessageBox::warning(this, "Error", "Ріст повинен бути int.");
         return;
     }
 
     // Створення гравця і додавання його до вектору
-    Player player(name, surname, wins, losses);
+    Player player(name, surname, height);
     players.push_back(player);
 
     // Очищення полів форми
     ui->playerName->clear();
     ui->playerSurname->clear();
-    ui->playerWins->clear();
-    ui->playerLoses->clear();
+    ui->playerHeight->clear();
     playersCount++;
 
 }
@@ -56,8 +53,28 @@ void AddTeamDialog::on_addPlayer_clicked()
 
 void AddTeamDialog::on_saveButton_clicked()
 {
-    if(playersCount>=5&&playersCount<=10){
-        db->addTeam(ui->teamName->text(),players);
+
+    if(playersCount>=3&&playersCount<=10){
+        QString winsS = ui->teamWins->text();
+        QString losesS = ui->teamLoses->text();
+        QString teamName = ui->teamName->text();
+
+        // Перевірка на пусті поля
+        if (winsS.isEmpty() || losesS.isEmpty() || teamName.isEmpty()) {
+            QMessageBox::warning(this, "Error", "Заповніть всі поля.");
+            return;
+        }
+
+        // Перевірка на int для перемог і програшів
+        bool winsOk, losesOk;
+        int wins = winsS.toInt(&winsOk);
+        int loses = winsS.toInt(&losesOk);
+
+        if (!winsOk||!losesOk) {
+            QMessageBox::warning(this, "Error", "Виграші і програші повинні бути int.");
+            return;
+        }
+        db->addTeam(teamName,players,wins,loses);
         this->hide();
         emit updateComboBoxes();
     }
