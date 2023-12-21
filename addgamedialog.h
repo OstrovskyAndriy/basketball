@@ -22,6 +22,8 @@ private slots:
     void on_addTeamButton_clicked();
     void fillComboBoxes();
 
+    void on_saveButton_clicked();
+
 private:
     Ui::AddGameDialog *ui;
 

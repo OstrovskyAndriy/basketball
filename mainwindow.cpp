@@ -33,6 +33,7 @@ void MainWindow::on_loginButton_clicked()
     bool isAdmin = false;
     try {
         isAdmin = db->getUser(username, password);
+        qDebug()<<isAdmin;
     } catch (const std::runtime_error &error) {
         // Виведення повідомлення про помилку
         QMessageBox::warning(this, "Error", error.what());

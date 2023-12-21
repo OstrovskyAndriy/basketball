@@ -6,31 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>518</width>
-    <height>375</height>
+    <width>547</width>
+    <height>370</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="saveButton">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>220</y>
-     <width>83</width>
-     <height>29</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Зберегти</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="addTeamButton">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>150</y>
+     <x>400</x>
+     <y>300</y>
      <width>131</width>
      <height>29</height>
     </rect>
@@ -42,8 +29,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>130</y>
+     <x>50</x>
+     <y>280</y>
      <width>321</width>
      <height>71</height>
     </rect>
@@ -58,10 +45,10 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>70</x>
+     <x>100</x>
      <y>20</y>
      <width>361</width>
-     <height>91</height>
+     <height>251</height>
     </rect>
    </property>
    <property name="title">
@@ -104,6 +91,55 @@
       <width>82</width>
       <height>28</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QDateEdit" name="dateEdit">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>120</y>
+      <width>110</width>
+      <height>29</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="locationLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>160</y>
+      <width>201</width>
+      <height>28</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>Локація гри</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>90</y>
+      <width>201</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Введіть дату проведення гри</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="saveButton">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>200</y>
+      <width>83</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Зберегти</string>
     </property>
    </widget>
   </widget>

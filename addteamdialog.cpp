@@ -59,6 +59,7 @@ void AddTeamDialog::on_saveButton_clicked()
     if(playersCount>=5&&playersCount<=10){
         db->addTeam(ui->teamName->text(),players);
         this->hide();
+        emit updateComboBoxes();
     }
     else{
         QMessageBox::warning(this, "Error", "Гравців повинно бути мінімум 5 і максимум 10.");

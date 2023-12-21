@@ -23,6 +23,9 @@ private slots:
 
     void on_saveButton_clicked();
 
+signals:
+    void updateComboBoxes();
+
 private:
     Ui::AddTeamDialog *ui;
     std::vector<Player> players;

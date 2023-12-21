@@ -130,21 +130,41 @@ bool DBManager::addTeam(const QString teamName, const std::vector<Player> &playe
     return true;
 }
 
-QStringList DBManager::getAllTeams()
+QMap<int, QString> DBManager::getAllTeams()
 {
-    QStringList teams;
-    QSqlQuery query("SELECT team_name FROM teams");
+    QMap<int, QString> teamsMap;
+    QSqlQuery query("SELECT team_id, team_name FROM teams");
 
     if (query.exec()) {
         while (query.next()) {
+            int teamId = query.value("team_id").toInt();
             QString teamName = query.value("team_name").toString();
-            teams << teamName;
+            teamsMap.insert(teamId, teamName);
         }
     } else {
         qDebug() << "Error retrieving teams from the database:" << query.lastError().text();
     }
 
-    return teams;
+    return teamsMap;
+}
+
+bool DBManager::addGame(int team1Id, int team2Id, const QString &result, const QDate &gameDate, const QString &location) const
+{
+    QSqlQuery query;
+    query.prepare("INSERT INTO games (date_played, team1_id, team2_id, score, location) "
+                  "VALUES (:datePlayed, :team1Id, :team2Id, :score, :location)");
+    query.bindValue(":datePlayed", gameDate.toString("yyyy-MM-dd"));
+    query.bindValue(":team1Id", team1Id);
+    query.bindValue(":team2Id", team2Id);
+    query.bindValue(":score", result);
+    query.bindValue(":location", location);
+
+    if (query.exec()) {
+        return true;
+    } else {
+        qDebug() << "Error adding game:" << query.lastError().text();
+        return false;
+    }
 }
 
 
