@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "addgamedialog.h"
+#include <dbmanager.h>
 
 namespace Ui {
 class ResultsDialog;
@@ -23,6 +24,8 @@ private slots:
 private:
     Ui::ResultsDialog *ui;
     AddGameDialog *addGameDialog;
+
+    DBManager *db;
 
 };
 
