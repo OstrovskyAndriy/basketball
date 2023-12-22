@@ -25,6 +25,12 @@ private slots:
 
     void setTableModel();
 
+    void on_teamsComboBox_currentTextChanged(const QString &arg1);
+
+    void fillComboBoxes();
+
+    void setModelSettings(QSqlQueryModel &model);
+
 signals:
     void backToLogin();
 

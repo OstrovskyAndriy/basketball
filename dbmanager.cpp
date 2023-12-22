@@ -196,21 +196,42 @@ void DBManager::updateTeamStats(int teamId, bool isVictorious, bool isDefeated) 
     }
 }
 
-QSqlQueryModel* DBManager::getGameResultsModel() const
+QSqlQueryModel* DBManager::getGameResultsModel(const QString& teamNameFilter) const
 {
     QSqlQueryModel* model = new QSqlQueryModel();
 
-    model->setQuery("SELECT t1.team_name AS team1, g.score, t2.team_name AS team2, g.date_played, g.location "
-                    "FROM games g "
-                    "JOIN teams t1 ON g.team1_id = t1.team_id "
-                    "JOIN teams t2 ON g.team2_id = t2.team_id");
+    QString queryStr = "SELECT t1.team_name AS team1, g.score, t2.team_name AS team2, g.date_played, g.location "
+                       "FROM games g "
+                       "JOIN teams t1 ON g.team1_id = t1.team_id "
+                       "JOIN teams t2 ON g.team2_id = t2.team_id";
+
+    if (!teamNameFilter.isEmpty()) {
+        queryStr += " WHERE t1.team_name = :teamName OR t2.team_name = :teamName";
+    }
+
+    QSqlQuery query;
+    query.prepare(queryStr);
+
+    if (!teamNameFilter.isEmpty()) {
+        query.bindValue(":teamName", teamNameFilter);
+    }
+
+    if (!query.exec()) {
+        qDebug() << "Error executing query:" << query.lastError().text();
+        return nullptr;  // Повертаємо nullptr в разі помилки виконання запиту
+    }
+
+    model->setQuery(query);
 
     if (model->lastError().isValid()) {
         qDebug() << "Error retrieving game results:" << model->lastError().text();
+        return nullptr;  // Повертаємо nullptr в разі помилки отримання результатів запиту
     }
 
     return model;
 }
+
+
 
 
 

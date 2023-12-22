@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>445</width>
-    <height>493</height>
+    <height>552</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,6 +18,9 @@
     <normaloff>:/img/img/logo.png</normaloff>:/img/img/logo.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QComboBox" name="teamsComboBox"/>
+   </item>
    <item>
     <widget class="QTableView" name="resultsTable"/>
    </item>

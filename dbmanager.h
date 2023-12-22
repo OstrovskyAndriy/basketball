@@ -43,7 +43,7 @@ public:
 
     void updateTeamStats(int teamId, bool isVictorious, bool isDefeated) const;
 
-    QSqlQueryModel* getGameResultsModel() const;
+    QSqlQueryModel* getGameResultsModel(const QString& teamNameFilter = "") const;
 
 };
 
