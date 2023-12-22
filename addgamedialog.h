@@ -24,6 +24,11 @@ private slots:
 
     void on_saveButton_clicked();
 
+    void on_goBack_clicked();
+
+signals:
+    void goToResults();
+
 private:
     Ui::AddGameDialog *ui;
 

@@ -8,7 +8,6 @@
 #include <QtSql>
 #include <player.h>
 #include <vector>
-#include <gameresult.h>
 
 
 class DBManager
@@ -43,8 +42,6 @@ public:
     bool addGame(int team1Id, int team2Id, const QString &result, const QDate &gameDate, const QString &location)const;
 
     void updateTeamStats(int teamId, bool isVictorious, bool isDefeated) const;
-
-    bool getAllGames();
 
     QSqlQueryModel* getGameResultsModel() const;
 

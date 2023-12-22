@@ -66,14 +66,14 @@ void AddGameDialog::on_saveButton_clicked()
 
     // Перевірка на пусті поля
     if (team1Id == 0 || team2Id == 0 || result.isEmpty() || location.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Please fill in all fields.");
+        QMessageBox::warning(this, "Error", "Введіть всі поля.");
         return;
     }
 
     // Перевірка формату результату гри
     QRegularExpression regex("\\d+:\\d+");
     if (!regex.match(result).hasMatch()) {
-        QMessageBox::warning(this, "Error", "Invalid format for the result. Please use the format 'number:number'.");
+        QMessageBox::warning(this, "Error", "Поганй формат. Введіть в форматі 'число:число'.");
         return;
     }
 
@@ -86,5 +86,12 @@ void AddGameDialog::on_saveButton_clicked()
         // Додайте код для обробки невдачі збереження гри
         qDebug() << "Failed to save game.";
     }
+}
+
+
+void AddGameDialog::on_goBack_clicked()
+{
+    this->close();
+    emit goToResults();
 }
 

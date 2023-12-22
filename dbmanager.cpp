@@ -200,7 +200,7 @@ QSqlQueryModel* DBManager::getGameResultsModel() const
 {
     QSqlQueryModel* model = new QSqlQueryModel();
 
-    model->setQuery("SELECT t1.team_name AS team1, t2.team_name AS team2, g.score, g.date_played "
+    model->setQuery("SELECT t1.team_name AS team1, g.score, t2.team_name AS team2, g.date_played, g.location "
                     "FROM games g "
                     "JOIN teams t1 ON g.team1_id = t1.team_id "
                     "JOIN teams t2 ON g.team2_id = t2.team_id");
@@ -211,6 +211,7 @@ QSqlQueryModel* DBManager::getGameResultsModel() const
 
     return model;
 }
+
 
 
 

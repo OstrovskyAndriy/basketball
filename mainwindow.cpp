@@ -25,7 +25,7 @@ void MainWindow::on_loginButton_clicked()
 
     // Перевірка на пусті поля
     if (username.isEmpty() || password.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Please enter both username and password.");
+        QMessageBox::warning(this, "Error", "Введіть ім'я і пароль.");
         return;
     }
 
@@ -44,6 +44,9 @@ void MainWindow::on_loginButton_clicked()
     resultsDialog->show();
     this->hide();
 
+    ui->name->clear();
+    ui->password->clear();
+    connect(resultsDialog,&ResultsDialog::backToLogin,this,&MainWindow::show);
 
 }
 

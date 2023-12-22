@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>478</width>
+    <width>445</width>
     <height>493</height>
    </rect>
   </property>
@@ -16,6 +16,13 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTableView" name="resultsTable"/>
+   </item>
+   <item>
+    <widget class="QPushButton" name="getBackButton">
+     <property name="text">
+      <string>Назад</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QPushButton" name="addGameButton">

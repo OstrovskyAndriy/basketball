@@ -21,6 +21,13 @@ private slots:
 
     void on_addGameButton_clicked();
 
+    void on_getBackButton_clicked();
+
+    void setTableModel();
+
+signals:
+    void backToLogin();
+
 private:
     Ui::ResultsDialog *ui;
     AddGameDialog *addGameDialog;
