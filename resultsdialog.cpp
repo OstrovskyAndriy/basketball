@@ -75,6 +75,7 @@ void ResultsDialog::fillComboBoxes()
 
     // Очищення вмісту ComboBox перед заповненням
     ui->teamsComboBox->clear();
+    ui->teamsComboBox->addItem("");
 
     // Вставлення команд у ComboBox з використанням ID як додаткового даних
     for (auto it = teamsMap.begin(); it != teamsMap.end(); ++it) {
@@ -92,5 +93,23 @@ void ResultsDialog::setModelSettings(QSqlQueryModel &model)
     this->setFixedSize(this->geometry().width(), this->geometry().height() - 23);
     ui->resultsTable->setSelectionMode(QAbstractItemView::NoSelection);
     ui->resultsTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+}
+
+
+void ResultsDialog::on_resultsTable_doubleClicked(const QModelIndex &index)
+{
+//    QString teamName = ui->resultsTable->model()->data(ui->resultsTable->model()->index(index.row(), 0)).toString();
+    QString teamName = ui->resultsTable->model()->data(index).toString();
+
+
+//     Перевірка, чи існує команда взагалі
+    if (!db->teamExists(teamName)) {
+        qDebug() << "Team does not exist.";
+        return;
+    }
+
+    teamDialog=new TeamDialog(teamName);
+    teamDialog->show();
+
 }
 

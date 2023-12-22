@@ -231,7 +231,55 @@ QSqlQueryModel* DBManager::getGameResultsModel(const QString& teamNameFilter) co
     return model;
 }
 
+bool DBManager::teamExists(const QString& teamName)
+{
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(*) FROM teams WHERE team_name = :teamName");
+    query.bindValue(":teamName", teamName);
 
+    if (query.exec() && query.next()) {
+        int count = query.value(0).toInt();
+        return count > 0;
+    } else {
+        qDebug() << "Error checking team existence:" << query.lastError().text();
+        return false;
+    }
+}
+
+
+QSqlQueryModel* DBManager::getTeamInfoModel(const QString& teamName)
+{
+    QSqlQueryModel* model = new QSqlQueryModel();
+    QSqlQuery query;
+
+    query.prepare("SELECT * FROM teams WHERE team_name = :teamName");
+    query.bindValue(":teamName", teamName);
+
+    if (query.exec()) {
+        model->setQuery(query);
+    } else {
+        qDebug() << "Error retrieving team information:" << query.lastError().text();
+    }
+
+    return model;
+}
+
+QSqlQueryModel* DBManager::getPlayersForTeamModel(const QString& teamName)
+{
+    QSqlQueryModel* model = new QSqlQueryModel();
+    QSqlQuery query;
+
+    query.prepare("SELECT * FROM players WHERE team_id IN (SELECT team_id FROM teams WHERE team_name = :teamName)");
+    query.bindValue(":teamName", teamName);
+
+    if (query.exec()) {
+        model->setQuery(query);
+    } else {
+        qDebug() << "Error retrieving players for team:" << query.lastError().text();
+    }
+
+    return model;
+}
 
 
 

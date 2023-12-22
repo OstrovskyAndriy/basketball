@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "addgamedialog.h"
 #include <dbmanager.h>
+#include <teamdialog.h>
 
 namespace Ui {
 class ResultsDialog;
@@ -31,12 +32,15 @@ private slots:
 
     void setModelSettings(QSqlQueryModel &model);
 
+    void on_resultsTable_doubleClicked(const QModelIndex &index);
+
 signals:
     void backToLogin();
 
 private:
     Ui::ResultsDialog *ui;
     AddGameDialog *addGameDialog;
+    TeamDialog* teamDialog;
 
     DBManager *db;
 

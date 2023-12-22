@@ -45,6 +45,14 @@ public:
 
     QSqlQueryModel* getGameResultsModel(const QString& teamNameFilter = "") const;
 
+    bool teamExists(const QString& teamName);
+
+    QSqlQueryModel* getTeamInfoModel(const QString& teamName);
+
+    QSqlQueryModel* getPlayersForTeamModel(const QString& teamName);
+
+
+
 };
 
 #endif // DBMANAGER_H

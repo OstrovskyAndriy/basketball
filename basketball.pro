@@ -31,7 +31,8 @@ SOURCES += \
     mainwindow.cpp \
     player.cpp \
     registrationdialog.cpp \
-    resultsdialog.cpp
+    resultsdialog.cpp \
+    teamdialog.cpp
 
 HEADERS += \
     addgamedialog.h \
@@ -40,14 +41,16 @@ HEADERS += \
     mainwindow.h \
     player.h \
     registrationdialog.h \
-    resultsdialog.h
+    resultsdialog.h \
+    teamdialog.h
 
 FORMS += \
     addgamedialog.ui \
     addteamdialog.ui \
     mainwindow.ui \
     registrationdialog.ui \
-    resultsdialog.ui
+    resultsdialog.ui \
+    teamdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

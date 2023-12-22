@@ -54,29 +54,36 @@ void AddTeamDialog::on_addPlayer_clicked()
 void AddTeamDialog::on_saveButton_clicked()
 {
 
+
     if(playersCount>=3&&playersCount<=10){
         QString winsS = ui->teamWins->text();
         QString losesS = ui->teamLoses->text();
         QString teamName = ui->teamName->text();
 
-        // Перевірка на пусті поля
-        if (winsS.isEmpty() || losesS.isEmpty() || teamName.isEmpty()) {
-            QMessageBox::warning(this, "Error", "Заповніть всі поля.");
-            return;
-        }
+        if(!db->teamExists(teamName)){
 
-        // Перевірка на int для перемог і програшів
-        bool winsOk, losesOk;
-        int wins = winsS.toInt(&winsOk);
-        int loses = winsS.toInt(&losesOk);
+            // Перевірка на пусті поля
+            if (winsS.isEmpty() || losesS.isEmpty() || teamName.isEmpty()) {
+                QMessageBox::warning(this, "Error", "Заповніть всі поля.");
+                return;
+            }
 
-        if (!winsOk||!losesOk) {
-            QMessageBox::warning(this, "Error", "Виграші і програші повинні бути int.");
-            return;
+            // Перевірка на int для перемог і програшів
+            bool winsOk, losesOk;
+            int wins = winsS.toInt(&winsOk);
+            int loses = winsS.toInt(&losesOk);
+
+            if (!winsOk||!losesOk) {
+                QMessageBox::warning(this, "Error", "Виграші і програші повинні бути int.");
+                return;
+            }
+            db->addTeam(teamName,players,wins,loses);
+            this->hide();
+            emit updateComboBoxes();
         }
-        db->addTeam(teamName,players,wins,loses);
-        this->hide();
-        emit updateComboBoxes();
+        else{
+            QMessageBox::warning(this, "Error", "Така команда вже присутня.");
+        }
     }
     else{
         QMessageBox::warning(this, "Error", "Гравців повинно бути мінімум 5 і максимум 10.");
