@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
     db=DBManager::getInstance();
 
     ui->setupUi(this);
+
+    hidePassword();
 }
 
 MainWindow::~MainWindow()
@@ -64,5 +66,23 @@ void MainWindow::on_regiterButton_clicked()
 {
     this->registrationDialog=new RegistrationDialog;
     registrationDialog->show();
+}
+
+void MainWindow::showPassword()
+{
+    connect(ui->showPswrd,&QPushButton::clicked,this,&MainWindow::hidePassword);
+        disconnect(ui->showPswrd,&QPushButton::clicked,this,&MainWindow::showPassword);
+        ui->showPswrd->setIcon(QIcon(":/img/img/hide_password_icon.png"));
+
+        ui->password->setEchoMode(QLineEdit::Normal);
+}
+
+void MainWindow::hidePassword()
+{
+    connect(ui->showPswrd,&QPushButton::clicked,this,&MainWindow::showPassword);
+        disconnect(ui->showPswrd,&QPushButton::clicked,this,&MainWindow::hidePassword);
+        ui->showPswrd->setIcon(QIcon(":/img/img/show_password_icon.png"));
+
+        ui->password->setEchoMode(QLineEdit::Password);
 }
 

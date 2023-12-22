@@ -14,33 +14,44 @@
    <string>Логін</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="img.qrc">
+   <iconset resource="src.qrc">
     <normaloff>:/img/img/logo.png</normaloff>:/img/img/logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
      <widget class="QLineEdit" name="name">
       <property name="placeholderText">
        <string>Введіть логін</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="1" column="0">
      <widget class="QLineEdit" name="password">
       <property name="placeholderText">
        <string>Введіть пароль</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="1" column="1">
+     <widget class="QPushButton" name="showPswrd">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="src.qrc">
+        <normaloff>:/img/img/show_password_icon.png</normaloff>:/img/img/show_password_icon.png</iconset>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
      <widget class="QPushButton" name="loginButton">
       <property name="text">
        <string>Вхід</string>
       </property>
      </widget>
     </item>
-    <item>
+    <item row="3" column="0">
      <widget class="QPushButton" name="regiterButton">
       <property name="text">
        <string>Реєстрація</string>
@@ -62,7 +73,7 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
-  <include location="img.qrc"/>
+  <include location="src.qrc"/>
  </resources>
  <connections/>
 </ui>

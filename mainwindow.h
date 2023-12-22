@@ -25,6 +25,9 @@ private slots:
 
     void on_regiterButton_clicked();
 
+    void showPassword();
+    void hidePassword();
+
 private:
     Ui::MainWindow *ui;
 
