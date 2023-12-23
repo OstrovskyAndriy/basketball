@@ -78,8 +78,9 @@ void AddTeamDialog::on_saveButton_clicked()
                 return;
             }
             db->addTeam(teamName,players,wins,loses);
-            this->hide();
             emit updateComboBoxes();
+            this->close();
+
         }
         else{
             QMessageBox::warning(this, "Error", "Така команда вже присутня.");

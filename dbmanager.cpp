@@ -78,8 +78,8 @@ bool DBManager::getUser(const QString &name, const QString &password)
     }
     else {
         // Користувача із вказаним логіном і паролем не знайдено
-        qDebug() << "User not found or invalid credentials.";
-        throw std::runtime_error("User not found or invalid credentials.");  // Виняток
+        //qDebug() << "User not found or invalid credentials.";
+        throw std::runtime_error("Користувача не знайдено, або дані введено некоректно.");  // Виняток
     }
 
     return false;
@@ -269,7 +269,7 @@ QSqlQueryModel* DBManager::getPlayersForTeamModel(const QString& teamName)
     QSqlQueryModel* model = new QSqlQueryModel();
     QSqlQuery query;
 
-    query.prepare("SELECT * FROM players WHERE team_id IN (SELECT team_id FROM teams WHERE team_name = :teamName)");
+    query.prepare("SELECT player_id, last_name, first_name, height FROM players WHERE team_id IN (SELECT team_id FROM teams WHERE team_name = :teamName)");
     query.bindValue(":teamName", teamName);
 
     if (query.exec()) {
