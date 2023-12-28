@@ -61,6 +61,19 @@ User DBManager::getUser(const QString &email, const QString &password)
 bool DBManager::registerUser(User &user)
 {
     QSqlQuery query;
+
+    // перевірка по email та номеру
+    query.prepare("SELECT COUNT(*) FROM users WHERE email = :email OR phone_number = :phone_number");
+    query.bindValue(":email", user.getEmail());
+    query.bindValue(":phone_number", user.getPhoneNumber());
+
+    if (query.exec() && query.next()) {
+        int count = query.value(0).toInt();
+        if(count>0){
+            throw std::runtime_error("Користувач з таким email або номером вже присутній.");
+        }
+    }
+
     query.prepare("INSERT INTO users (username, password, isAdmin, email, phone_number) "
                   "VALUES (:username, :password, :isAdmin, :email, :phone_number)");
 
@@ -72,12 +85,13 @@ bool DBManager::registerUser(User &user)
 
     if (query.exec()) {
         qDebug() << "User registration successful.";
-        return true;  // Successful registration
+        return true;
     } else {
         qDebug() << "User registration failed:" << query.lastError().text();
-        return false; // Registration failed
+        return false;
     }
 }
+
 
 
 bool DBManager::addTeam(const QString teamName, const std::vector<Player> &players, int wins, int loses)
@@ -343,7 +357,7 @@ bool DBManager::createTables()
             ||
             !query.exec("CREATE TABLE users ("
                         "user_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                        "username VARCHAR(255) UNIQUE,"
+                        "username VARCHAR(255),"
                         "password VARCHAR(255),"
                         "isAdmin BOLEAN,"
                         "email VARCHAR(255),"

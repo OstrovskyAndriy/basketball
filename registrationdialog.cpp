@@ -24,24 +24,22 @@ void RegistrationDialog::on_registerButton_clicked()
 
     // Перевірка на пусті поля
     if (username.isEmpty() || password.isEmpty() || email.isEmpty() || phoneNumber.isEmpty()) {
-        qDebug() << "Please fill in all fields.";
         QMessageBox::warning(this, "Error", "Заповніть всі поля.");
         return;
     }
 
     // Перевірка, чи email має символ '@'
     if (!email.contains('@')) {
-        qDebug() << "Invalid email format.";
         QMessageBox::warning(this, "Error", "Невірний формат email.");
         return;
     }
 
-    this->user=new User(username, password,  false, email, phoneNumber);
-
-    if (db->registerUser(*user)) {
+    try {
+        this->user = new User(username, password, false, email, phoneNumber);
+        db->registerUser(*user);
         this->close();
-    } else {
-        QMessageBox::warning(this, "Error", "Користувач з таким email або номером вже пристуній.");
+    } catch (const std::runtime_error &error) {
+        QMessageBox::warning(this, "Error", error.what());
     }
 }
 

@@ -79,9 +79,10 @@ void AddGameDialog::on_saveButton_clicked()
         return;
     }
 
-
     if (db->addGame(team1Id, team2Id, result, gameDate, location)) {
-        qDebug() << "Game saved successfully.";
+
+        QMessageBox::information(this, "Success", "Гру додано успішно.", QMessageBox::Ok);
+
         on_goBack_clicked();
     } else {
         qDebug() << "Failed to save game.";

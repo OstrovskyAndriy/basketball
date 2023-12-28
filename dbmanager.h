@@ -29,11 +29,9 @@ public:
     void connectToDataBase();
     QSqlDatabase getDB();
 
-    //bool getUser(const QString &email, const QString &password);
     User getUser(const QString &email, const QString &password);
 
 
-//    bool registerUser(const QString &username, const QString &password, bool isAdmin, const QString &email, const QString &phoneNumber);
     bool registerUser(User& user);
 
 

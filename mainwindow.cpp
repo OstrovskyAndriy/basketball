@@ -21,44 +21,6 @@ MainWindow::~MainWindow()
 }
 
 
-//void MainWindow::on_loginButton_clicked()
-//{
-//    QString email = ui->email->text();
-//    QString password = ui->password->text();
-
-//    // Перевірка на пусті поля
-//    if (email.isEmpty() || password.isEmpty()) {
-//        QMessageBox::warning(this, "Error", "Введіть email і пароль.");
-//        return;
-//    }
-
-//    // Перевірка, чи email має символ '@'
-//    if (!email.contains('@')) {
-//        QMessageBox::warning(this, "Error", "Невірний формат email.");
-//        return;
-//    }
-
-//    // Логіка отримання користувача з бази даних
-//    bool isAdmin = false;
-//    try {
-//        isAdmin = db->getUser(email, password);
-//        qDebug()<<isAdmin;
-//    } catch (const std::runtime_error &error) {
-//        // Виведення повідомлення про помилку
-//        QMessageBox::warning(this, "Error", error.what());
-//        return;
-//    }
-
-//    this->resultsDialog = new ResultsDialog(isAdmin);
-//    resultsDialog->show();
-//    this->hide();
-
-//    ui->email->clear();
-//    ui->password->clear();
-//    connect(resultsDialog,&ResultsDialog::backToLogin,this,&MainWindow::show);
-
-//}
-
 void MainWindow::on_loginButton_clicked()
 {
     QString email = ui->email->text();
@@ -79,7 +41,6 @@ void MainWindow::on_loginButton_clicked()
     try {
         User user = db->getUser(email, password);
 
-        // Assuming User class has a isAdmin() method
         bool isAdmin = user.isAdmin();
 
         this->resultsDialog = new ResultsDialog(isAdmin);
