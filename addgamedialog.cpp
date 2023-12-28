@@ -12,6 +12,8 @@ AddGameDialog::AddGameDialog(QWidget *parent) :
     db=DBManager::getInstance();
     fillComboBoxes();
     ui->dateEdit->setDate(QDate::currentDate());
+    this->setFixedSize(this->geometry().width(), this->geometry().height());
+
 }
 
 AddGameDialog::~AddGameDialog()
@@ -77,13 +79,11 @@ void AddGameDialog::on_saveButton_clicked()
         return;
     }
 
-    // Виклик функції для вставлення гри в базу даних
 
     if (db->addGame(team1Id, team2Id, result, gameDate, location)) {
-        // Додайте код для обробки успішного збереження гри
         qDebug() << "Game saved successfully.";
+        on_goBack_clicked();
     } else {
-        // Додайте код для обробки невдачі збереження гри
         qDebug() << "Failed to save game.";
     }
 }

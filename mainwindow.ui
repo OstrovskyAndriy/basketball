@@ -20,9 +20,9 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QLineEdit" name="name">
+     <widget class="QLineEdit" name="email">
       <property name="placeholderText">
-       <string>Введіть логін</string>
+       <string>Введіть email</string>
       </property>
      </widget>
     </item>

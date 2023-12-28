@@ -17,6 +17,10 @@ AddTeamDialog::~AddTeamDialog()
 
 void AddTeamDialog::on_addPlayer_clicked()
 {
+    if(playersCount==10){
+        QMessageBox::warning(this, "Error", "не можна додавати більше 10 гравців.");
+        return;
+    }
 
     QString name = ui->playerName->text();
     QString surname = ui->playerSurname->text();
@@ -55,7 +59,7 @@ void AddTeamDialog::on_saveButton_clicked()
 {
 
 
-    if(playersCount>=3&&playersCount<=10){
+    if(playersCount>=5&&playersCount<=10){
         QString winsS = ui->teamWins->text();
         QString losesS = ui->teamLoses->text();
         QString teamName = ui->teamName->text();
@@ -83,7 +87,7 @@ void AddTeamDialog::on_saveButton_clicked()
 
         }
         else{
-            QMessageBox::warning(this, "Error", "Така команда вже присутня.");
+            QMessageBox::warning(this, "Error", "Команда з такою назвою вже присутня.");
         }
     }
     else{

@@ -29,14 +29,20 @@ void RegistrationDialog::on_registerButton_clicked()
         return;
     }
 
-    bool success = db->registerUser(username, password, false, email, phoneNumber);
+    // Перевірка, чи email має символ '@'
+    if (!email.contains('@')) {
+        qDebug() << "Invalid email format.";
+        QMessageBox::warning(this, "Error", "Невірний формат email.");
+        return;
+    }
 
-    if (success) {
+    if (db->registerUser(username, password, false, email, phoneNumber)) {
         qDebug() << "User registration successful.";
         this->close();
     } else {
-        qDebug() << "User registration failed.";
+        QMessageBox::warning(this, "Error", "Користувач з таким email або номером вже пристуній.");
     }
 }
+
 
 

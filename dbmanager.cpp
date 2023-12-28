@@ -1,4 +1,5 @@
 #include "dbmanager.h"
+#include <QMessageBox>
 #include <stdexcept>  // Для std::runtime_error
 
 
@@ -33,6 +34,25 @@ QSqlDatabase DBManager::getDB()
 }
 
 bool DBManager::registerUser(const QString &username, const QString &password, bool isAdmin, const QString &email, const QString &phoneNumber) {
+    // Перевірка унікальності email та phone_number
+    QSqlQuery checkQuery;
+    checkQuery.prepare("SELECT COUNT(*) FROM users WHERE email = :email OR phone_number = :phone_number");
+    checkQuery.bindValue(":email", email);
+    checkQuery.bindValue(":phone_number", phoneNumber);
+
+    if (checkQuery.exec() && checkQuery.next()) {
+        int count = checkQuery.value(0).toInt();
+        if (count > 0) {
+            qDebug() << "User with the same email or phone number already exists.";
+
+            return false;  // Користувач з таким email або phone_number вже існує
+        }
+    } else {
+        qDebug() << "Error checking user existence:" << checkQuery.lastError().text();
+        return false;  // Помилка перевірки існування користувача
+    }
+
+    // Реєстрація користувача
     QSqlQuery query;
     query.prepare("INSERT INTO users (username, password, isAdmin, email, phone_number) "
                   "VALUES (:username, :password, :isAdmin, :email, :phone_number)");
@@ -52,17 +72,17 @@ bool DBManager::registerUser(const QString &username, const QString &password, b
 
 
 
-bool DBManager::getUser(const QString &name, const QString &password)
+bool DBManager::getUser(const QString &email, const QString &password)
 {
     QSqlQuery query;
-    query.prepare("SELECT * FROM Users WHERE username = :username AND password = :password");
-    query.bindValue(":username", name);
+    query.prepare("SELECT * FROM Users WHERE email = :email AND password = :password");
+    query.bindValue(":email", email);
     query.bindValue(":password", password);
     int userId = 0;
     bool isAdmin = false;
 
     if (query.exec() && query.next()) {
-        // Користувач із вказаним логіном і паролем знайдений
+        // Користувач із вказаним email і паролем знайдений
         userId = query.value("user_id").toInt();
         isAdmin = query.value("isAdmin").toBool();
         qDebug() << "User found. User ID:" << userId;
@@ -77,13 +97,12 @@ bool DBManager::getUser(const QString &name, const QString &password)
         }
     }
     else {
-        // Користувача із вказаним логіном і паролем не знайдено
-        //qDebug() << "User not found or invalid credentials.";
         throw std::runtime_error("Користувача не знайдено, або дані введено некоректно.");  // Виняток
     }
 
     return false;
 }
+
 
 bool DBManager::addTeam(const QString teamName, const std::vector<Player> &players, int wins, int loses)
 {
@@ -100,7 +119,7 @@ bool DBManager::addTeam(const QString teamName, const std::vector<Player> &playe
         return false;
     }
 
-    // Отримання ідентифікатора вставленої команди
+    // Отримання ідентифікатора вставленої команди для подальшої вставки гравців
     int teamId = query.lastInsertId().toInt();
 
     // Вставка гравців в таблицю players
@@ -186,7 +205,7 @@ void DBManager::updateTeamStats(int teamId, bool isVictorious, bool isDefeated) 
     } else if (isDefeated) {
         query.prepare("UPDATE teams SET defeats = defeats + 1 WHERE team_id = :teamId");
     } else {
-        return;  // Невідомий стан гри
+        return;  // Невідомий стан гри нічия
     }
 
     query.bindValue(":teamId", teamId);
@@ -222,6 +241,11 @@ QSqlQueryModel* DBManager::getGameResultsModel(const QString& teamNameFilter) co
     }
 
     model->setQuery(query);
+    model->setHeaderData(0, Qt::Horizontal, "Команда 1");
+    model->setHeaderData(1, Qt::Horizontal, "Рахунок");
+    model->setHeaderData(2, Qt::Horizontal, "Команда 2");
+    model->setHeaderData(3, Qt::Horizontal, "Дата гри");
+    model->setHeaderData(4, Qt::Horizontal, "Локація");
 
     if (model->lastError().isValid()) {
         qDebug() << "Error retrieving game results:" << model->lastError().text();
@@ -280,11 +304,6 @@ QSqlQueryModel* DBManager::getPlayersForTeamModel(const QString& teamName)
 
     return model;
 }
-
-
-
-
-
 
 
 bool DBManager::restoreDataBase()

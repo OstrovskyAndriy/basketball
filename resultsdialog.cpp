@@ -41,18 +41,35 @@ void ResultsDialog::on_getBackButton_clicked()
     this->close();
 }
 
+//void ResultsDialog::setTableModel()
+//{
+//    QSqlQueryModel* model = db->getGameResultsModel();
+
+//    // Встановлення моделі таблиць для QTableView
+//    ui->resultsTable->setModel(model);
+//    ui->resultsTable->verticalHeader()->setVisible(false);
+
+//    setModelSettings(*model);
+
+//    fillComboBoxes();
+
+//}
+
 void ResultsDialog::setTableModel()
 {
     QSqlQueryModel* model = db->getGameResultsModel();
 
-    // Встановлення моделі таблиць для QTableView
+    // Встановлення моделі таблиці для QTableView
     ui->resultsTable->setModel(model);
     ui->resultsTable->verticalHeader()->setVisible(false);
+
 
     setModelSettings(*model);
 
     fillComboBoxes();
 }
+
+
 
 
 
@@ -98,7 +115,6 @@ void ResultsDialog::setModelSettings(QSqlQueryModel &model)
 
 void ResultsDialog::on_resultsTable_doubleClicked(const QModelIndex &index)
 {
-//    QString teamName = ui->resultsTable->model()->data(ui->resultsTable->model()->index(index.row(), 0)).toString();
     QString teamName = ui->resultsTable->model()->data(index).toString();
 
 

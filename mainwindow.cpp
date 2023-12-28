@@ -22,19 +22,25 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_loginButton_clicked()
 {
-    QString username = ui->name->text();
+    QString email = ui->email->text();
     QString password = ui->password->text();
 
     // Перевірка на пусті поля
-    if (username.isEmpty() || password.isEmpty()) {
-        QMessageBox::warning(this, "Error", "Введіть ім'я і пароль.");
+    if (email.isEmpty() || password.isEmpty()) {
+        QMessageBox::warning(this, "Error", "Введіть email і пароль.");
+        return;
+    }
+
+    // Перевірка, чи email має символ '@'
+    if (!email.contains('@')) {
+        QMessageBox::warning(this, "Error", "Невірний формат email.");
         return;
     }
 
     // Логіка отримання користувача з бази даних
     bool isAdmin = false;
     try {
-        isAdmin = db->getUser(username, password);
+        isAdmin = db->getUser(email, password);
         qDebug()<<isAdmin;
     } catch (const std::runtime_error &error) {
         // Виведення повідомлення про помилку
@@ -46,7 +52,7 @@ void MainWindow::on_loginButton_clicked()
     resultsDialog->show();
     this->hide();
 
-    ui->name->clear();
+    ui->email->clear();
     ui->password->clear();
     connect(resultsDialog,&ResultsDialog::backToLogin,this,&MainWindow::show);
 
