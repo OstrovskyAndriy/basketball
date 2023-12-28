@@ -23,7 +23,7 @@ TeamDialog::TeamDialog(const QString &teamName, QWidget *parent) :
     ui->teamInfo->setModel(teamInfoModel);
 
     // Встановлення назв для стовпців у teamInfo
-    teamInfoModel->setHeaderData(0, Qt::Horizontal, "ID");
+    teamInfoModel->setHeaderData(0, Qt::Horizontal, "ID команди");
     teamInfoModel->setHeaderData(1, Qt::Horizontal, "Назва");
     teamInfoModel->setHeaderData(2, Qt::Horizontal, "Перевоги");
     teamInfoModel->setHeaderData(3, Qt::Horizontal, "Програші");

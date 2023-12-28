@@ -33,46 +33,8 @@ QSqlDatabase DBManager::getDB()
     return db;
 }
 
-bool DBManager::registerUser(const QString &username, const QString &password, bool isAdmin, const QString &email, const QString &phoneNumber) {
-    // Перевірка унікальності email та phone_number
-    QSqlQuery checkQuery;
-    checkQuery.prepare("SELECT COUNT(*) FROM users WHERE email = :email OR phone_number = :phone_number");
-    checkQuery.bindValue(":email", email);
-    checkQuery.bindValue(":phone_number", phoneNumber);
 
-    if (checkQuery.exec() && checkQuery.next()) {
-        int count = checkQuery.value(0).toInt();
-        if (count > 0) {
-            qDebug() << "User with the same email or phone number already exists.";
-
-            return false;  // Користувач з таким email або phone_number вже існує
-        }
-    } else {
-        qDebug() << "Error checking user existence:" << checkQuery.lastError().text();
-        return false;  // Помилка перевірки існування користувача
-    }
-
-    // Реєстрація користувача
-    QSqlQuery query;
-    query.prepare("INSERT INTO users (username, password, isAdmin, email, phone_number) "
-                  "VALUES (:username, :password, :isAdmin, :email, :phone_number)");
-    query.bindValue(":username", username);
-    query.bindValue(":password", password);
-    query.bindValue(":isAdmin", isAdmin);
-    query.bindValue(":email", email);
-    query.bindValue(":phone_number", phoneNumber);
-
-    if (query.exec()) {
-        return true;  // Успішна реєстрація
-    } else {
-        qDebug() << "User registration failed:" << query.lastError().text();
-        return false; // Невдача реєстрації
-    }
-}
-
-
-
-bool DBManager::getUser(const QString &email, const QString &password)
+User DBManager::getUser(const QString &email, const QString &password)
 {
     QSqlQuery query;
     query.prepare("SELECT * FROM Users WHERE email = :email AND password = :password");
@@ -82,25 +44,39 @@ bool DBManager::getUser(const QString &email, const QString &password)
     bool isAdmin = false;
 
     if (query.exec() && query.next()) {
-        // Користувач із вказаним email і паролем знайдений
+        // User with the specified email and password found
         userId = query.value("user_id").toInt();
         isAdmin = query.value("isAdmin").toBool();
         qDebug() << "User found. User ID:" << userId;
 
-        // Перевірка, чи користувач - адміністратор
-        if (isAdmin) {
-            qDebug() << "User is an admin.";
-            return true;
-        }
-        else {
-            qDebug() << "User is not an admin.";
-        }
+        User user(query.value("username").toString(),query.value("password").toString(),isAdmin, query.value("email").toString(), query.value("phone_number").toString());
+
+        return user;
     }
     else {
-        throw std::runtime_error("Користувача не знайдено, або дані введено некоректно.");  // Виняток
+        throw std::runtime_error("Користувача не знайдено, або дані введено некоректно.");  // Exception
     }
+}
 
-    return false;
+bool DBManager::registerUser(User &user)
+{
+    QSqlQuery query;
+    query.prepare("INSERT INTO users (username, password, isAdmin, email, phone_number) "
+                  "VALUES (:username, :password, :isAdmin, :email, :phone_number)");
+
+    query.bindValue(":username", user.getUsername());
+    query.bindValue(":password", user.getPassword());
+    query.bindValue(":isAdmin", user.isAdmin());
+    query.bindValue(":email", user.getEmail());
+    query.bindValue(":phone_number", user.getPhoneNumber());
+
+    if (query.exec()) {
+        qDebug() << "User registration successful.";
+        return true;  // Successful registration
+    } else {
+        qDebug() << "User registration failed:" << query.lastError().text();
+        return false; // Registration failed
+    }
 }
 
 

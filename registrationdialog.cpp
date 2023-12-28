@@ -36,8 +36,9 @@ void RegistrationDialog::on_registerButton_clicked()
         return;
     }
 
-    if (db->registerUser(username, password, false, email, phoneNumber)) {
-        qDebug() << "User registration successful.";
+    this->user=new User(username, password,  false, email, phoneNumber);
+
+    if (db->registerUser(*user)) {
         this->close();
     } else {
         QMessageBox::warning(this, "Error", "Користувач з таким email або номером вже пристуній.");

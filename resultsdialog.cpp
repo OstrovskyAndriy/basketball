@@ -41,20 +41,6 @@ void ResultsDialog::on_getBackButton_clicked()
     this->close();
 }
 
-//void ResultsDialog::setTableModel()
-//{
-//    QSqlQueryModel* model = db->getGameResultsModel();
-
-//    // Встановлення моделі таблиць для QTableView
-//    ui->resultsTable->setModel(model);
-//    ui->resultsTable->verticalHeader()->setVisible(false);
-
-//    setModelSettings(*model);
-
-//    fillComboBoxes();
-
-//}
-
 void ResultsDialog::setTableModel()
 {
     QSqlQueryModel* model = db->getGameResultsModel();

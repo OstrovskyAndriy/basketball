@@ -32,7 +32,8 @@ SOURCES += \
     player.cpp \
     registrationdialog.cpp \
     resultsdialog.cpp \
-    teamdialog.cpp
+    teamdialog.cpp \
+    user.cpp
 
 HEADERS += \
     addgamedialog.h \
@@ -42,7 +43,8 @@ HEADERS += \
     player.h \
     registrationdialog.h \
     resultsdialog.h \
-    teamdialog.h
+    teamdialog.h \
+    user.h
 
 FORMS += \
     addgamedialog.ui \

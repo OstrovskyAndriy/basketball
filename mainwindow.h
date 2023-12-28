@@ -5,6 +5,7 @@
 #include <dbmanager.h>
 #include <resultsdialog.h>
 #include <registrationdialog.h>
+#include <user.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

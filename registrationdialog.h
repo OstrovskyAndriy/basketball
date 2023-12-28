@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <dbmanager.h>
+#include <user.h>
 
 namespace Ui {
 class RegistrationDialog;
@@ -23,6 +24,7 @@ private:
     Ui::RegistrationDialog *ui;
 
     DBManager *db;
+    User *user;
 };
 
 #endif // REGISTRATIONDIALOG_H

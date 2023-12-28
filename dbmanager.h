@@ -8,7 +8,7 @@
 #include <QtSql>
 #include <player.h>
 #include <vector>
-
+#include <user.h>
 
 class DBManager
 {
@@ -29,9 +29,13 @@ public:
     void connectToDataBase();
     QSqlDatabase getDB();
 
-    bool getUser(const QString &email, const QString &password);
+    //bool getUser(const QString &email, const QString &password);
+    User getUser(const QString &email, const QString &password);
 
-    bool registerUser(const QString &username, const QString &password, bool isAdmin, const QString &email, const QString &phoneNumber);
+
+//    bool registerUser(const QString &username, const QString &password, bool isAdmin, const QString &email, const QString &phoneNumber);
+    bool registerUser(User& user);
+
 
     bool addTeam(const QString teamName, const std::vector<Player> &players, int wins, int loses);
 
